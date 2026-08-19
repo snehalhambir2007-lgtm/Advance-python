@@ -1,0 +1,43 @@
+class PaymentStrategy:
+    def pay(self, amount):
+        pass  # Base method to override
+
+
+class CreditCardPayment(PaymentStrategy):
+    def pay(self, amount):
+        print(f"Paid {amount} using Credit Card")
+
+
+class PayPalPayment(PaymentStrategy):
+    def pay(self, amount):
+        print(f"Paid {amount} using PayPal")
+
+
+class PaymentContext:
+    def __init__(self, strategy):
+        self.strategy = strategy  # Store payment method
+
+    def set_strategy(self, strategy):
+        self.strategy = strategy  # Change payment method
+
+    def pay(self, amount):
+        self.strategy.pay(amount)  # Use selected strategy
+
+
+# Main program
+if __name__ == "__main__":
+    # Create payment strategies
+    credit_card = CreditCardPayment()
+    paypal = PayPalPayment()
+
+    # Start with Credit Card payment
+    payment = PaymentContext(credit_card)
+
+    print("Payment using Credit Card:")
+    payment.pay(1000)
+
+    # Change payment strategy to PayPal
+    payment.set_strategy(paypal)
+
+    print("\nPayment using PayPal:")
+    payment.pay(1500)
